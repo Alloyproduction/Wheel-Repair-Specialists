@@ -2,6 +2,11 @@ from odoo import api,tools,fields, models,_
 import base64
 from odoo import modules
 
+class partner(models.Model):
+    _inherit ='res.partner'
+
+    jobcard_no= fields.Char('JobCard No')
+
 
 class InheritSale(models.Model):
     _inherit = 'sale.order'
@@ -20,7 +25,7 @@ class InheritSale(models.Model):
     @api.constrains('claim_no')
     def unique_identity(self):
         if self.claim_no:
-            identities = self.env['sale.order'].search_count([('claim_no', '=', self.chasis_no)])
+            identities = self.env['sale.order'].search_count([('claim_no', '=', self.claim_no)])
             if identities > 1:
                 raise ValueError(_('This claim_no is already exist'))
 
