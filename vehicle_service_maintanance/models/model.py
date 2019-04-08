@@ -2,7 +2,7 @@ from odoo import api,tools,fields, models,_
 import base64
 from odoo import modules
 
-class partner(models.Model):
+class partnerinherit(models.Model):
     _inherit ='res.partner'
 
     jobcard_no= fields.Char('JobCard No')
