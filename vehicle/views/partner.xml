@@ -4,6 +4,13 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="after">
+                <div class="oe_edit_only" options="{'horizontal': true}">
+                <field name="is_insurance" attrs="{'invisible': [('is_company','=',False)]}"/>
+                     <label for="is_insurance" attrs="{'invisible': [('is_company','=',False)]}"/>
+                </div>
+            </xpath>
+
             <xpath expr="//notebook/page[3]" position="after">
                 <page name="Vehicles" string="Vehicles">
                     <group>

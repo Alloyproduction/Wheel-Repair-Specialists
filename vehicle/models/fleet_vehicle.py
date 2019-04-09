@@ -15,6 +15,7 @@ class partner(models.Model):
     _inherit ='res.partner'
 
     vehicle_ids =fields.One2many('vehicle','owner_id')
+    is_insurance = fields.Boolean('Insurance')
 
 class FleetVehicle(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']

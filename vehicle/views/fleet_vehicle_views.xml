@@ -22,7 +22,7 @@
                              <field name="is_insured"/>
                         </div>
                         <h2>
-                            <field name="insurance_company" domain="[('is_company','=',True)]" attrs="{'invisible': [('is_insured', '=', False)],'required': [('is_insured', '=', True)]}" class="oe_inline" placeholder="Select Agency"/>
+                            <field name="insurance_company" domain="[('is_insurance','=',True)]" attrs="{'invisible': [('is_insured', '=', False)],'required': [('is_insured', '=', True)]}" class="oe_inline" placeholder="Select Agency"/>
                         </h2>
 
                         <!--<label for="tag_ids" class="oe_edit_only"/>-->
