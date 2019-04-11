@@ -32,29 +32,32 @@ class InheritSale(models.Model):
 
     project= fields.Many2one('project.project',string='Service Type')
 
-
-    @api.model
-    def create_task(self,project_id):
-        task = self.env['project.task'].create({'name':self.partner_id.name+'-'+self.name,'sale':self.id,'project_id':project_id})
-
-        for line in self.order_line:
-            print (line.product_id.name)
-            self.env['subtask.component'].create({'task':task.id,'product_id':line.product_id.id,'price_subtotal':line.price_subtotal,'product_uom_qty':line.product_uom_qty,'price_unit':line.price_unit})
-
     @api.multi
     def action_confirm_replica(self):
-
-        if self._get_forbidden_state_confirm() & set(self.mapped('state')):
-            raise UserError(_(
-                'It is not allowed to confirm an order in the following states: %s'
-            ) % (', '.join(self._get_forbidden_state_confirm())))
-
-        for order in self.filtered(lambda order: order.partner_id not in order.message_partner_ids):
-            order.message_subscribe([order.partner_id.id])
         self.write({
             'state': 'sale',
             'confirmation_date': fields.Datetime.now()
         })
         if self.project:
-            self.create_task(self.project.id)
+            task = self.env['project.task'].create(
+                {'name': self.partner_id.name + '-' + self.name, 'sale': self.id, 'project_id': self.project.id})
+
+            for line in self.order_line:
+                print (line.product_id.name)
+                self.env['subtask.component'].create(
+                    {'task': task.id, 'product_id': line.product_id.id, 'price_subtotal': line.price_subtotal,
+                     'product_uom': line.product_uom.id, 'product_uom_qty': line.product_uom_qty,
+                     'price_unit': line.price_unit})
+
+            view = self.env.ref('project.view_task_form2')
+            return {
+                'name': 'Task created',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'view_id': view.id,
+                'res_model': 'project.task',
+                'type': 'ir.actions.act_window',
+                'res_id': task.id,
+                'context': self.env.context
+            }
 
