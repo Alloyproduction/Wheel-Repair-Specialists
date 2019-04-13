@@ -24,7 +24,15 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_form2" />
             <field name="arch" type="xml">
-            <xpath expr="//notebook/page[1]" position="before">
+
+                <xpath expr="//header" position="inside">
+                    <field name="is_task_finished" invisible="1"/>
+
+                     <button name="close_task" string="Close Task" attrs="{'invisible': [('is_task_finished', '=', True)]}" type="object"/>
+                     <button name="create_invoice" class="oe_highlight"  string="Create Invoice" attrs="{'invisible': [('is_task_finished', '=', False)]}" type="object"/>
+
+                  </xpath>
+                <xpath expr="//notebook/page[1]" position="before">
                 <page string="Components">
                         <field name="sub_component_sale">
                             <tree>
