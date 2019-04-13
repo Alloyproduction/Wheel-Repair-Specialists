@@ -123,7 +123,7 @@ class InheritSale(models.Model):
 
     project= fields.Many2one('project.project',string='Service Type')
 
-    @api.multi
+    @api.one
     def action_confirm_replica(self):
         self.write({
             'state': 'sale',
