@@ -5,6 +5,31 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.addons import decimal_precision as dp
 import  datetime
 
+# import  math
+#
+# class AccountAnalyticLine(models.Model):
+#     _inherit = 'account.analytic.line'
+#
+#     cost = fields.Float('Labor_cost',compute='get_labor_cost',store=True)
+#
+#
+#     @api.one
+#     def get_labor_cost(self):
+#         if self.employee_id and self.unit_amount:
+#             result = '{0:02.0f}:{1:02.0f}'.format((self.unit_amount * 60)/ 60)
+#             print(result)
+#             employee = self.env['hr.employee'].search([('id','=',self.employee_id.id)])
+#             if employee and employee.timesheet_cost:
+#                 self.unit_amount/employee.timesheet_cost
+
+
+class Account_invoice(models.Model):
+
+    _inherit = 'account.invoice'
+
+    sale_id = fields.Many2one('sale.order')
+
+
 class tasks(models.Model):
 
     _inherit = 'project.task'
@@ -13,7 +38,13 @@ class tasks(models.Model):
     sub_component_sale = fields.One2many('subtask.component','task')
 
     is_task_finished = fields.Boolean('is_task_finish',compute='change_stage')
-
+    # total_cost = fields.Float('Total Labor Cost', compute='_compute_total_cost')
+    #
+    #
+    #
+    # def get_total_labor_cost(self):
+    #     if self.timesheet_ids:
+    #         pass
 
     @api.one
     @api.onchange('stage_id')
@@ -70,21 +101,24 @@ class tasks(models.Model):
                 ValueError(_('Set Sales Journal'))
 
             invoice_obj = self.env['account.invoice'].create(
-                {'account_id': account_id_credit, 'user_id': 1, 'type': 'out_invoice',
+                {'account_id': account_id_credit,'sale_id':sale.id, 'user_id': 1, 'type': 'out_invoice',
                  'journal_id': sales_journal.id, 'partner_id': partner.id,
                  'payment_term_id': payment_term, 'date_invoice': datetime.datetime.now().date()})
 
             if invoice_obj:
                 for all_line in self.sub_component_sale:
+                    analytic_account_tag =[]
                     product = self.get_product_obj(all_line.product_id.id)
                         # create invoices
                     account_id_product = self.get_product_account(invoice_obj, partner.id,
                                                                   product[0])
+                    for analytic_accounttag in all_line.analytic_tag_ids:
+                        analytic_account_tag.append(analytic_accounttag.id)
                     self.env['account.invoice.line'].create(
                         {'invoice_id': invoice_obj.id, 'account_id': account_id_product[0],
                          'product_id': product[0].id, 'name': all_line.product_id.name,
                          'quantity': all_line.product_uom_qty,
-                         'price_unit': all_line.price_unit})
+                         'price_unit': all_line.price_unit,'discount':all_line.discount,'analytic_tag_ids':[(6, 0, analytic_account_tag)]})
 
             view = self.env.ref('account.invoice_form')
             return {
@@ -108,14 +142,87 @@ class subtaskcomponent(models.Model):
 
     _name  = 'subtask.component'
 
-    task = fields.Many2one('project.task')
+    task = fields.Many2one('project.task',ondelete='cascade')
     product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)], change_default=True, ondelete='restrict')
     product_uom_qty = fields.Float(string='Ordered Quantity', digits=dp.get_precision('Product Unit of Measure'),
                                    required=True, default=1.0)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure')
     price_unit = fields.Float('Unit Price', required=True, digits=dp.get_precision('Product Price'), default=0.0)
+    discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'), default=0.0)
+    price_subtotal = fields.Float(compute='_compute_amount', string='Subtotal', readonly=True, store=True)
+    tax_id = fields.Many2many('account.tax', string='Taxes',
+                              domain=['|', ('active', '=', False), ('active', '=', True)])
 
-    price_subtotal = fields.Float(string='subtotal')
+    analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Analytic Tags')
+    price_tax = fields.Float(compute='_compute_amount', string='Total Tax', readonly=True, store=True)
+    price_total = fields.Float(compute='_compute_amount', string='Total', readonly=True, store=True)
+
+    # @api.multi
+    # @api.onchange('product_id')
+    # def product_id_change(self):
+    #     if not self.product_id:
+    #         return {'domain': {'product_uom': []}}
+    #
+    #     vals = {}
+    #     domain = {'product_uom': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
+    #     if not self.product_uom or (self.product_id.uom_id.id != self.product_uom.id):
+    #         vals['product_uom'] = self.product_id.uom_id
+    #         vals['product_uom_qty'] = self.product_uom_qty or 1.0
+    #
+    #     product = self.product_id.with_context(
+    #         lang=self.order_id.partner_id.lang,
+    #         partner=self.order_id.partner_id,
+    #         quantity=vals.get('product_uom_qty') or self.product_uom_qty,
+    #         date=self.order_id.date_order,
+    #         # pricelist=self.order_id.pricelist_id.id,
+    #         uom=self.product_uom.id
+    #     )
+    #
+    #     result = {'domain': domain}
+    #
+    #     title = False
+    #     message = False
+    #     warning = {}
+    #     if product.sale_line_warn != 'no-message':
+    #         title = _("Warning for %s") % product.name
+    #         message = product.sale_line_warn_msg
+    #         warning['title'] = title
+    #         warning['message'] = message
+    #         result = {'warning': warning}
+    #         if product.sale_line_warn == 'block':
+    #             self.product_id = False
+    #             return result
+    #
+    #     name = self.get_sale_order_line_multiline_description_sale(product)
+    #
+    #     vals.update(name=name)
+    #
+    #     self._compute_tax_id()
+    #
+    #     if self.order_id.pricelist_id and self.order_id.partner_id:
+    #         vals['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
+    #             self._get_display_price(product), product.taxes_id, self.tax_id, self.company_id)
+    #     self.update(vals)
+    #
+    #     return result
+
+    @api.one
+    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
+    def _compute_amount(self):
+        """
+        Compute the amounts of the SO line.
+        """
+        if self.task:
+            sale = self.env['sale.order'].search([('id', '=', self.task.sale)])
+            for line in self:
+                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+                taxes = line.tax_id.compute_all(price, sale.currency_id, line.product_uom_qty,
+                                                product=line.product_id, partner=sale.partner_shipping_id)
+                line.update({
+                    'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
+                    'price_total': taxes['total_included'],
+                    'price_subtotal': taxes['total_excluded'],
+                })
 
 
 class InheritSale(models.Model):
@@ -138,10 +245,16 @@ class InheritSale(models.Model):
                 {'name': self.partner_id.name + '-' + self.name, 'sale': self.id,'stage_id':stage_id,'project_id': self.project.id})
 
             for line in self.order_line:
+                tax_list=[]
+                analytic_account_tag=[]
+                for tax in line.tax_id:
+                    tax_list.append(tax.id)
+                for analytic_accounttag in line.analytic_tag_ids:
+                    analytic_account_tag.append(analytic_accounttag.id)
                 self.env['subtask.component'].create(
                     {'task': task.id, 'product_id': line.product_id.id, 'price_subtotal': line.price_subtotal,
                      'product_uom': line.product_uom.id, 'product_uom_qty': line.product_uom_qty,
-                     'price_unit': line.price_unit})
+                     'price_unit': line.price_unit,'tax_id':[(6, 0, tax_list)],'discount':line.discount,'analytic_tag_ids':[(6, 0, analytic_account_tag)]})
 
             view = self.env.ref('project.view_task_form2')
             return {
