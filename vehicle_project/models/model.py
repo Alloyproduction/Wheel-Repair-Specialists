@@ -162,8 +162,7 @@ class subtaskcomponent(models.Model):
     @api.onchange('product_id')
     def product_id_change(self):
         if self.task:
-            context = self._context
-            task =  self.env['project.task'].search([('id', '=',str(context['params']['id']))])
+            task =  self.env['project.task'].search([('id', '=',self._context.get('default_sale'))])
             sale = self.env['sale.order'].search([('id', '=', task.sale),('company_id','=',self.env.user.company_id.id)])
             if not self.product_id:
                 return {'domain': {'product_uom': []}}
@@ -179,7 +178,7 @@ class subtaskcomponent(models.Model):
                 partner=sale.partner_id,
                 quantity=vals.get('product_uom_qty') or self.product_uom_qty,
                 date=sale.date_order,
-                pricelist=sale.pricelist_id_.id,
+                pricelist=sale.pricelist_id.id,
                 uom=self.product_uom.id
             )
 
