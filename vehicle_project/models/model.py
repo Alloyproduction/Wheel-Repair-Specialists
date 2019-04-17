@@ -142,7 +142,8 @@ class subtaskcomponent(models.Model):
 
     _name  = 'subtask.component'
 
-    task = fields.Many2one('project.task',ondelete='cascade')
+    task = fields.Many2one('project.task',ondelete='cascade', index=True, copy=False, readonly=True)
+
     product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)], change_default=True, ondelete='restrict')
     product_uom_qty = fields.Float(string='Ordered Quantity', digits=dp.get_precision('Product Unit of Measure'),
                                    required=True, default=1.0)
@@ -157,54 +158,83 @@ class subtaskcomponent(models.Model):
     price_tax = fields.Float(compute='_compute_amount', string='Total Tax', readonly=True, store=True)
     price_total = fields.Float(compute='_compute_amount', string='Total', readonly=True, store=True)
 
-    # @api.multi
-    # @api.onchange('product_id')
-    # def product_id_change(self):
-    #     if not self.product_id:
-    #         return {'domain': {'product_uom': []}}
-    #
-    #     vals = {}
-    #     domain = {'product_uom': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
-    #     if not self.product_uom or (self.product_id.uom_id.id != self.product_uom.id):
-    #         vals['product_uom'] = self.product_id.uom_id
-    #         vals['product_uom_qty'] = self.product_uom_qty or 1.0
-    #
-    #     product = self.product_id.with_context(
-    #         lang=self.order_id.partner_id.lang,
-    #         partner=self.order_id.partner_id,
-    #         quantity=vals.get('product_uom_qty') or self.product_uom_qty,
-    #         date=self.order_id.date_order,
-    #         # pricelist=self.order_id.pricelist_id.id,
-    #         uom=self.product_uom.id
-    #     )
-    #
-    #     result = {'domain': domain}
-    #
-    #     title = False
-    #     message = False
-    #     warning = {}
-    #     if product.sale_line_warn != 'no-message':
-    #         title = _("Warning for %s") % product.name
-    #         message = product.sale_line_warn_msg
-    #         warning['title'] = title
-    #         warning['message'] = message
-    #         result = {'warning': warning}
-    #         if product.sale_line_warn == 'block':
-    #             self.product_id = False
-    #             return result
-    #
-    #     name = self.get_sale_order_line_multiline_description_sale(product)
-    #
-    #     vals.update(name=name)
-    #
-    #     self._compute_tax_id()
-    #
-    #     if self.order_id.pricelist_id and self.order_id.partner_id:
-    #         vals['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
-    #             self._get_display_price(product), product.taxes_id, self.tax_id, self.company_id)
-    #     self.update(vals)
-    #
-    #     return result
+    @api.multi
+    @api.onchange('product_id')
+    def product_id_change(self):
+        if self.task:
+            context = self._context
+            task =  self.env['project.task'].search([('id', '=',str(context['params']['id']))])
+            sale = self.env['sale.order'].search([('id', '=', task.sale),('company_id','=',self.env.user.company_id.id)])
+            if not self.product_id:
+                return {'domain': {'product_uom': []}}
+
+            vals = {}
+            domain = {'product_uom': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
+            if not self.product_uom or (self.product_id.uom_id.id != self.product_uom.id):
+                vals['product_uom'] = self.product_id.uom_id
+                vals['product_uom_qty'] = self.product_uom_qty or 1.0
+
+            product = self.product_id.with_context(
+                lang=sale.partner_id.lang,
+                partner=sale.partner_id,
+                quantity=vals.get('product_uom_qty') or self.product_uom_qty,
+                date=sale.date_order,
+                pricelist=sale.pricelist_id_x.id,
+                uom=self.product_uom.id
+            )
+
+            result = {'domain': domain}
+
+            title = False
+            message = False
+            warning = {}
+            if product.sale_line_warn != 'no-message':
+                title = _("Warning for %s") % product.name
+                message = product.sale_line_warn_msg
+                warning['title'] = title
+                warning['message'] = message
+                result = {'warning': warning}
+                if product.sale_line_warn == 'block':
+                    self.product_id = False
+                    return result
+
+            self._compute_tax_id(sale)
+            if sale.pricelist_id and sale.partner_id:
+                vals['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
+                    self._get_display_price(product,sale), product.taxes_id, self.tax_id, self.env.user.company_id)
+            self.update(vals)
+
+            return result
+
+    @api.multi
+    def _get_display_price(self, product,sale):
+
+        if sale.pricelist_id.discount_policy == 'with_discount':
+            return product.with_context(pricelist=sale.pricelist_id.id).price
+        product_context = dict(self.env.context, partner_id=sale.partner_id.id, date=sale.date_order,
+                               uom=self.product_uom.id)
+
+        final_price, rule_id = self.order_id.pricelist_id.with_context(product_context).get_product_price_rule(
+            self.product_id, self.product_uom_qty or 1.0, sale.partner_id)
+        base_price, currency = self.with_context(product_context)._get_real_price_currency(product, rule_id,
+                                                                                           self.product_uom_qty,
+                                                                                           self.product_uom,
+                                                                                           sale.pricelist_id.id)
+        if currency != sale.pricelist_id.currency_id:
+            base_price = currency._convert(
+                base_price, sale.pricelist_id.currency_id,
+                sale.company_id, sale.date_order or fields.Date.today())
+        # negative discounts (= surcharge) are included in the display price
+        return max(base_price, final_price)
+
+    @api.multi
+    def _compute_tax_id(self,sale):
+
+        for line in self:
+            fpos = sale.fiscal_position_id or sale.partner_id.property_account_position_id
+            # If company_id is set, always filter taxes by the company
+            taxes = line.product_id.taxes_id.filtered(lambda r: not line.company_id or r.company_id == line.company_id)
+            line.tax_id = fpos.map_tax(taxes, line.product_id, line.order_id.partner_shipping_id) if fpos else taxes
 
     @api.one
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
@@ -229,6 +259,7 @@ class InheritSale(models.Model):
     _inherit = 'sale.order'
 
     project= fields.Many2one('project.project',string='Service Type')
+    pricelist_id_x = fields.Many2one('product.pricelist', related='pricelist_id',store=True)
 
     @api.multi
     def action_confirm_replica(self):

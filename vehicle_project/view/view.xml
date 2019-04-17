@@ -43,7 +43,7 @@
                                 <field name="price_unit"/>
                                 <field name="tax_id" widget="many2many_tags" options="{'no_create': True}" />
                                 <field name="discount"/>
-                                <field name="price_subtotal"/>
+                                 <field name="price_subtotal" widget="monetary" groups="account.group_show_line_subtotals_tax_excluded"/>
                             </tree>
 
                         </field>
