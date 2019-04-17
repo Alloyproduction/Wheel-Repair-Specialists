@@ -37,7 +37,7 @@ class tasks(models.Model):
     sale = fields.Char('sale.order')
     sub_component_sale = fields.One2many('subtask.component','task')
 
-    is_task_finished = fields.Boolean('is_task_finish',compute='change_stage')
+    is_task_finished = fields.Boolean('is_task_finish',compute='_compute_kanban_state_label')
     # total_cost = fields.Float('Total Labor Cost', compute='_compute_total_cost')
     #
     #
@@ -46,15 +46,20 @@ class tasks(models.Model):
     #     if self.timesheet_ids:
     #         pass
 
-    @api.one
-    @api.onchange('stage_id')
-    def change_stage(self):
-        if self.stage_id:
-            print('...........',self.stage_id.name)
-            if self.stage_id.name=='Finished':
-                self.is_task_finished =True
+    @api.depends('stage_id', 'kanban_state')
+    def _compute_kanban_state_label(self):
+        for task in self:
+            if task.kanban_state == 'normal':
+                task.kanban_state_label = task.legend_normal
+            elif task.kanban_state == 'blocked':
+                task.kanban_state_label = task.legend_blocked
             else:
-                self.is_task_finished =False
+                task.kanban_state_label = task.legend_done
+
+            if task.stage_id.name == 'Finished':
+                task.is_task_finished = True
+            else:
+                task.is_task_finished = False
 
     @api.one
     def get_payment_term(self, terms):
@@ -200,7 +205,9 @@ class subtaskcomponent(models.Model):
             self._compute_tax_id(sale)
             if sale.pricelist_id and sale.partner_id:
                 vals['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
-                    self._get_display_price(product,sale), product.taxes_id, self.tax_id, self.env.user.company_id)
+                    self._get_display_price(product,sale), product.taxes_id, self.tax_id, sale.company_id)
+                print (self.env['account.tax']._fix_tax_included_price_company(
+                    self._get_display_price(product,sale), product.taxes_id, self.tax_id, sale.company_id))
             self.update(vals)
 
             return result
@@ -232,7 +239,7 @@ class subtaskcomponent(models.Model):
         for line in self:
             fpos = sale.fiscal_position_id or sale.partner_id.property_account_position_id
             # If company_id is set, always filter taxes by the company
-            taxes = line.product_id.taxes_id.filtered(lambda r: not self.env.user.company_id or r.company_id == self.env.user.company_id)
+            taxes = line.product_id.taxes_id.filtered(lambda r: not sale.company_id or r.company_id == sale.company_id)
             line.tax_id = fpos.map_tax(taxes, line.product_id, line.order_id.partner_shipping_id) if fpos else taxes
 
     @api.one
