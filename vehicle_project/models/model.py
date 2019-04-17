@@ -179,7 +179,7 @@ class subtaskcomponent(models.Model):
                 partner=sale.partner_id,
                 quantity=vals.get('product_uom_qty') or self.product_uom_qty,
                 date=sale.date_order,
-                pricelist=sale.pricelist_id_x.id,
+                pricelist=sale.pricelist_id_.id,
                 uom=self.product_uom.id
             )
 
@@ -259,8 +259,6 @@ class InheritSale(models.Model):
     _inherit = 'sale.order'
 
     project= fields.Many2one('project.project',string='Service Type')
-    pricelist_id_x = fields.Many2one('product.pricelist', related='pricelist_id',store=True)
-
     @api.multi
     def action_confirm_replica(self):
         self.write({
