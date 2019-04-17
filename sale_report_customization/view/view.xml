@@ -72,7 +72,7 @@
                                   <span style="float:left;font-weight:bold;">Chasis # :</span>
                             </div>
                             <div class="right" style="float: right;">
-                                 <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.vehicle.vin_sn"/>
+                                 <span style="float:right;white-space: nowrap;" t-esc="doc.vehicle.vin_sn"/>
                             </div>
                         </div>
                     </t>
