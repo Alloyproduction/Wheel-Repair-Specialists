@@ -6,43 +6,83 @@
                 <br/>
                 <div>
                     <t t-if="o.sale_id.vehicle.insurance_company">
-                        <span style="float:left;font-weight:bold;">Agency Name:</span>
-                        <span style="float:right;" t-field="o.sale_id.vehicle.insurance_company.name"/>
+
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                <span style="font-weight:bold;">Agency Name:</span>
+                            </div>
+                            <div class="right" style="float: right;white-space: nowrap;">
+                                <span t-esc="o.sale_id.vehicle.insurance_company.name"></span>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.claim_no">
-                        <span style="float:left;font-weight:bold;">Claim# :</span>
-                        <span style="float:right;" t-field="o.sale_id.claim_no"/>
+                        <div style="overflow:hidden">
+                         <span style="float:left;font-weight:bold;">Claim# :</span>
+                        <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.claim_no"/>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.service_advisor">
-                        <span style="float:left;font-weight:bold;">Service Advisor :</span>
-                        <span style="float:right;" t-field="o.sale_id.service_advisor"/>
+
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Service Advisor :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                  <span style="white-space: nowrap;" t-esc="o.sale_id.service_advisor.name"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.partner_id.jobcard_no">
-                        <span style="float:left;font-weight:bold;">Job Card # :</span>
-                        <span style="float:right;" t-field="o.sale_id.partner_id.jobcard_no"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                   <span style="float:left;font-weight:bold;">Job Card # :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                  <span style="white-space: nowrap;" t-esc="o.sale_id.partner_id.jobcard_no"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.vehicle.license_plate">
-                        <span style="float:left;font-weight:bold;">Plate # :</span>
-                        <span style="float:right;" t-field="o.sale_id.vehicle.license_plate"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Plate # :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                               <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.vehicle.license_plate"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.vehicle.model_id">
-                        <span style="float:left;font-weight:bold;">Car Type:</span>
-                        <span style="float:right;" t-field="o.sale_id.vehicle.model_id"/>
+
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Car Type:</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                   <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.vehicle.model_id.name"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.vehicle.vin_sn">
-                        <span style="float:left;font-weight:bold;">Chasis # :</span>
-                        <span style="float:right;" t-field="o.sale_id.vehicle.vin_sn"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Chasis # :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                 <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.vehicle.vin_sn"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="o.sale_id.vehicle.odometer">
-                        <span style="float:left;font-weight:bold;">Odoo Meter :</span>
-                        <span style="float:right;" t-field="o.sale_id.vehicle.odometer"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Odoo Meter :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                 <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.vehicle.odometer"/>
+                            </div>
+                        </div>
                     </t>
                     <br/>
                 </div>

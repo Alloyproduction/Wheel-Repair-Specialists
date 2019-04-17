@@ -5,48 +5,90 @@
 
             <xpath expr="//div[hasclass('page')]/div[2]" position="after">
                 <br/>
-                <div>
+
+                        <div>
                     <t t-if="doc.vehicle.insurance_company">
-                        <span style="float:left;font-weight:bold;">Agency Name:</span>
-                        <span style="float:right;" t-field="doc.vehicle.insurance_company.name"/>
+
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                <span style="font-weight:bold;">Agency Name:</span>
+                            </div>
+                            <div class="right" style="float: right;white-space: nowrap;">
+                                <span t-esc="doc.vehicle.insurance_company.name"></span>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.claim_no">
-                        <span style="float:left;font-weight:bold;">Claim# :</span>
-                        <span style="float:right;" t-field="doc.claim_no"/>
+                        <div style="overflow:hidden">
+                         <span style="float:left;font-weight:bold;">Claim# :</span>
+                        <span style="float:right;white-space: nowrap;" t-esc="doc.claim_no"/>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.service_advisor">
-                        <span style="float:left;font-weight:bold;">Service Advisor :</span>
-                        <span style="float:right;" t-field="doc.service_advisor"/>
+
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Service Advisor :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                  <span style="white-space: nowrap;" t-esc="doc.service_advisor.name"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.partner_id.jobcard_no">
-                        <span style="float:left;font-weight:bold;">Job Card # :</span>
-                        <span style="float:right;" t-field="doc.partner_id.jobcard_no"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                   <span style="float:left;font-weight:bold;">Job Card # :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                  <span style="white-space: nowrap;" t-esc="doc.partner_id.jobcard_no"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.vehicle.license_plate">
-                        <span style="float:left;font-weight:bold;">Plate # :</span>
-                        <span style="float:right;" t-field="doc.vehicle.license_plate"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Plate # :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                               <span style="float:right;white-space: nowrap;" t-esc="doc.vehicle.license_plate"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.vehicle.model_id">
-                        <span style="float:left;font-weight:bold;">Car Type:</span>
-                        <span style="float:right;" t-field="doc.vehicle.model_id"/>
+
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Car Type:</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                   <span style="float:right;white-space: nowrap;" t-esc="doc.vehicle.model_id.name"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.vehicle.vin_sn">
-                        <span style="float:left;font-weight:bold;">Chasis # :</span>
-                        <span style="float:right;" t-field="doc.vehicle.vin_sn"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Chasis # :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                 <span style="float:right;white-space: nowrap;" t-esc="o.sale_id.vehicle.vin_sn"/>
+                            </div>
+                        </div>
                     </t>
-                    <br/>
                     <t t-if="doc.vehicle.odometer">
-                        <span style="float:left;font-weight:bold;">Odoo Meter :</span>
-                        <span style="float:right;" t-field="doc.vehicle.odometer"/>
+                        <div style="overflow:hidden">
+                            <div class="left" style="float: left;">
+                                  <span style="float:left;font-weight:bold;">Odoo Meter :</span>
+                            </div>
+                            <div class="right" style="float: right;">
+                                 <span style="float:right;white-space: nowrap;" t-esc="doc.vehicle.odometer"/>
+                            </div>
+                        </div>
                     </t>
                     <br/>
                 </div>
+
             </xpath>
              <xpath expr="//div[hasclass('page')]/table[1]/thead[1]/tr[1]/th[5]" position="replace">
                 <th class="text-right">VAT</th>
@@ -56,7 +98,7 @@
                 <tr>
                     <t t-set="colspan" t-value="5"/>
                     <th class="text-left">‫الوصف‬</th>
-                    <th class="text-right">‫لكمية‬</th>
+                    <th class="text-right">‫الكمية‬</th>
                     <th class="text-right">‫السعر‬</th>
                     <th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
                         <span>التخفيض .(%)</span>
