@@ -30,36 +30,8 @@
                     </div>
                     <group  string="General Properties">
                         <group col="4" colspan="8"  >
-                            <field name="owner_id"/>
-                            <field name="driver_id" />
-                            <field name="location" />
                             <field name="vin_sn"/>
-                            <field name="model_year"/>
                             <field name="odometer"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
-                        </group>
-                    </group>
-                    <group >
-                        <group  string="Additional Properties">
-                            <group colspan="8" col="2">
-                            <field name="seats" />
-                            <field name="doors" />
-                            <field name="color" />
-                            </group>
-                            </group>
-                        <group string="Engine Options">
-                            <field name="transmission" />
-                            <field name="fuel_type" />
-                            <label for="co2"/>
-                            <div class="o_row" name="co2">
-                                <field name="co2"/><span>g/km</span>
-                            </div>
-                            <field name="horsepower" />
-                            <field name="horsepower_tax" />
-                            <label for="power"/>
-                            <div class="o_row">
-                                <field name="power"/><span>kW</span>
-                            </div>
                         </group>
                     </group>
                 </sheet>
@@ -80,10 +52,8 @@
                 <field name="model_id" />
                 <field name="license_plate"/>
                 <field name="vin_sn"/>
-                <field name="model_id" />
                 <field name="is_insured"/>
                 <field name="insurance_company"/>
-                <field name="owner_id" />
                 <!--<field name="log_drivers" invisible="1"/>-->
             </tree>
         </field>

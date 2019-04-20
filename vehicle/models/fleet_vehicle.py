@@ -29,7 +29,7 @@ class FleetVehicle(models.Model):
     insurance_company = fields.Many2one('res.partner',string='Insurance Company')
     active = fields.Boolean('Active', default=True, track_visibility="onchange")
     odometer = fields.Float('Odometer')
-    owner_id = fields.Many2one('res.partner',string='Owner',required=True)
+    owner_id = fields.Many2one('res.partner',string='Owner',required=False)
     company_id = fields.Many2one('res.company', 'Company')
     license_plate = fields.Char(track_visibility="onchange",
         help='License plate number of the vehicle (i = plate number for a car)')

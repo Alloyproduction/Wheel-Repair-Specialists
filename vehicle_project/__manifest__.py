@@ -10,7 +10,7 @@
     "website": "",
     "license": "AGPL-3",
     "depends": [
-        'base','sale','vehicle','project'
+        'base','sale','vehicle','project','project_task_timer'
     ],
     "data": [
         "security/ir.model.access.csv",

@@ -6,6 +6,8 @@ class partnerinherit(models.Model):
     _inherit ='res.partner'
 
     jobcard_no= fields.Char('JobCard No')
+    customer_arabic_name = fields.Char('')
+    customer_code = fields.Char()
 
 
 class InheritSale(models.Model):

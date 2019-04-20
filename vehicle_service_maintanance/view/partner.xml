@@ -7,6 +7,11 @@
             <xpath expr="//field[@name='function']" position="before">
                 <field name="jobcard_no" palce_holder="JobCard No"/>
             </xpath>
+              <xpath expr="//field[@name='name']" position="after">
+                  <field name="customer_arabic_name"  placeholder="Arabic Name" />
+                   <field name="customer_code"  placeholder="Customer Code" />
+            </xpath>
+
         </field>
     </record>
 </odoo>
