@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_partnerform" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='function']" position="before">
+                <field name="jobcard_no" palce_holder="JobCard No"/>
+            </xpath>
+              <xpath expr="//field[@name='name']" position="after">
+                  <field name="customer_arabic_name"  placeholder="Arabic Name" />
+                   <field name="customer_code"  placeholder="Customer Code" />
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
