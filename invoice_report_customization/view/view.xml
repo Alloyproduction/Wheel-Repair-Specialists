@@ -5,14 +5,14 @@
             <xpath expr="//div[hasclass('page')]/div[1]" position="after">
                 <br/>
                 <div>
-                    <t t-if="o.sale_id.vehicle.insurance_company">
+                    <t t-if="o.sale_id.agency_name">
 
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Agency Name:</span>
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span t-esc="o.sale_id.vehicle.insurance_company.name"></span>
+                                <span t-esc="o.sale_id.agency_name.name"></span>
                             </div>
                         </div>
                     </t>

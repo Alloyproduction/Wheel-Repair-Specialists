@@ -7,14 +7,14 @@
                 <br/>
 
                         <div>
-                    <t t-if="doc.vehicle.insurance_company">
+                    <t t-if="doc.agency_name">
 
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Agency Name:</span>
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span t-esc="doc.vehicle.insurance_company.name"></span>
+                                <span t-esc="doc.agency_name.name"></span>
                             </div>
                         </div>
                     </t>
