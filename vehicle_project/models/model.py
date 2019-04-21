@@ -400,7 +400,8 @@ class subtaskcomponent(models.Model):
 class InheritSale(models.Model):
     _inherit = 'sale.order'
 
-    project = fields.Many2one('project.project', string='Service Type')
+    project = fields.Many2one('project.project', string='Project')
+    agency_name = fields.Many2one('res.partner', string='Agency Name')
 
     @api.multi
     def action_confirm_replica(self):
