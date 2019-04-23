@@ -10,7 +10,7 @@
 
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Customer Name:</span>
-                                <span t-esc="doc.parter_id.name"/>
+                                <span t-esc="doc.partner_id.name"/>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
@@ -23,7 +23,7 @@
 
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Vat:</span>
-                                <span t-esc="doc.parter_id.vat"/>
+                                <span t-esc="doc.partner_id.vat"/>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
@@ -36,7 +36,7 @@
 
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Address :</span>
-                                <span t-esc="doc.parter_id.street"/>
+                                <span t-esc="doc.partner_id.street"/>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
@@ -49,7 +49,7 @@
 
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Address:</span>
-                                <span t-esc="doc.parter_id.street2"/>
+                                <span t-esc="doc.partner_id.street2"/>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
