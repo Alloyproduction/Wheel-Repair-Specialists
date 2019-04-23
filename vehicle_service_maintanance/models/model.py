@@ -16,6 +16,8 @@ class partnerinherit(models.Model):
     chasis_no_arbi = fields.Char('‫‫رقم الشاصية‬')
     odoo_meter_arbi = fields.Char('قراءة د العدا')
     jobcard_no_arbi = fields.Char('‫رقم ‫كرت‬ ‫عمل ‫الوكالة')
+    street1_arbi = fields.Char('street')
+    street2_arbi = fields.Char('street')
 
 
 

@@ -4,6 +4,15 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='street']" position="after">
+                <field name="street1_arbi" palce_holder="Arbic Street1"/>
+            </xpath>
+             <xpath expr="//field[@name='street2']" position="after">
+                <field name="street2_arbi" palce_holder="Arbic Street2"/>
+            </xpath>
+
             <xpath expr="//field[@name='function']" position="before">
                 <field name="jobcard_no" palce_holder="JobCard No"/>
             </xpath>
