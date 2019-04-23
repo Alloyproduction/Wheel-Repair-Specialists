@@ -8,6 +8,16 @@ class partnerinherit(models.Model):
     jobcard_no= fields.Char('JobCard No')
     customer_arabic_name = fields.Char('')
     customer_code = fields.Char()
+    agency_name_arbi = fields.Char('اسم الوكالة')
+    car_type_arbi = fields.Char('نوع ة السيار')
+    claim_no_arbi = fields.Char('‫رقم‬ ‫المطالبة‬')
+    service_advisor_arbi = fields.Char('اسم المشر ف')
+    plate_no_arbi = fields.Char('رقم ة اللوح')
+    chasis_no_arbi = fields.Char('‫‫رقم الشاصية‬')
+    odoo_meter_arbi = fields.Char('قراءة د العدا')
+    jobcard_no_arbi = fields.Char('‫رقم ‫كرت‬ ‫عمل ‫الوكالة')
+
+
 
 
 class InheritSale(models.Model):
