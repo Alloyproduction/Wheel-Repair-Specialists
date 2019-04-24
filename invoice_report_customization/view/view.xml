@@ -2,65 +2,6 @@
 <odoo>
     <data>
         <template id="reportinvoice_customize" inherit_id="account.report_invoice_document">
-           <xpath expr="//t[1]/t[1]/t[2]" position="replace">
-            </xpath>
-            <xpath expr="//t[1]/t[1]/t[2]" position="replace">
-            <div style="overflow:hidden">
-
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Customer Name:</span>
-                                <span t-esc="doc.partner_id.name"/>
-
-                            </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.partner_id.customer_arabic_name"></span>
-                                <span style="font-weight:bold;">اسم ‫العميل‬: ‫‬</span>
-
-                            </div>
-                        </div>
-                     <div style="overflow:hidden">
-
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Vat:</span>
-                                <span t-esc="doc.partner_id.vat"/>
-
-                            </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.partner_id.vat"></span>
-                                <span style="font-weight:bold;">  ‫الرقم‬ ‫الضريبة‬ :‬ ‫‬</span>
-
-                            </div>
-                        </div>
-                 <div style="overflow:hidden">
-
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Address :</span>
-                                <span t-esc="doc.partner_id.street"/>
-
-                            </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.partner_id.street1_arbi"></span>
-                                <span style="font-weight:bold;">  ‫عنوان‬ :‫‬</span>
-
-                            </div>
-                        </div>
-                 <div style="overflow:hidden">
-
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Address:</span>
-                                <span t-esc="doc.partner_id.street2"/>
-
-                            </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.partner_id.street2_arbi"></span>
-                                <span style="font-weight:bold;">  ‫عنوان‬ :‫‬</span>
-
-                            </div>
-                        </div>
-
-
-            </xpath>
-
             <xpath expr="//div[hasclass('page')]/div[1]" position="after">
                 <br/>
                  <div style="overflow:hidden">
