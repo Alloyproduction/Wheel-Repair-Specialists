@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
         <template id="reportinvoice_customize" inherit_id="account.report_invoice_document">
-            <xpath expr="//div[hasclass('page')]/div[1]" position="after">
-                <br/>
-                <div>
+             <xpath expr="//t[1]/t[2]" position="replace">
+                  <div>
                       <div style="overflow:hidden">
 
                             <div class="left" style="float: left;">
@@ -58,6 +58,9 @@
                             </div>
                         </div>
                 </div>
+            </xpath>
+
+            <xpath expr="//div[hasclass('page')]/div[1]" position="after">
                 <br/>
                  <div>
                     <t>
@@ -213,7 +216,7 @@
 
             </xpath>
 
-               <xpath expr="//div[hasclass('page')]/div[4]" position="replace">
+               <xpath expr="//div[hasclass('page')]/div[3]" position="replace">
                    <div class="clearfix">
                         <div id="total" class="row">
                             <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
@@ -274,82 +277,7 @@
                           text-align: right;"></span>
                     </div>
                 </div>
-
             </xpath>
-                <!--<div class="clearfix">-->
-                    <!--<div id="total" class="row" name="total">-->
-                        <!--<div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">-->
-                            <!--<table class="table table-sm">-->
-                                <!--<tr class="border-black o_subtotal" style="">-->
-                                    <!--<td>-->
-                                        <!--<strong>-->
-                                            <!--<span>Subtotal</span>-->
-                                            <!--<span>/</span>-->
-                                            <!--<span>الاجمالي قبل‬ ‫الضر‬‫يبه‬</span>-->
-                                        <!--</strong>-->
-                                    <!--</td>-->
-                                    <!--<td class="text-right">-->
-                                        <!--<span t-field="o.sale_idamount_untaxed"/>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<t t-foreach="o.sale_idamount_by_group" t-as="amount_by_group">-->
-                                    <!--<tr style="">-->
-                                        <!--<t t-if="amount_by_group[3] == 1 and o.sale_idamount_untaxed == amount_by_group[2]">-->
-                                            <!--<td>-->
-                                                <!--<span t-esc="amount_by_group[0]"/>-->
-                                                <!--<span>&amp;nbsp;<span>on</span>&amp;nbsp;-->
-                                                    <!--<t t-esc="amount_by_group[2]"-->
-                                                       <!--t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.sale_idpricelist_id.currency_id}"/>-->
-                                                <!--</span>-->
-                                            <!--</td>-->
-                                            <!--<td class="text-right o_price_total">-->
-                                                <!--<span t-esc="amount_by_group[1]"-->
-                                                      <!--t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.sale_idpricelist_id.currency_id}"/>-->
-                                            <!--</td>-->
-                                        <!--</t>-->
-                                        <!--<t t-else="">-->
-                                            <!--<td>-->
-                                                <!--<span t-esc="amount_by_group[0]"/>-->
-                                            <!--</td>-->
-                                            <!--<td class="text-right o_price_total">-->
-                                                <!--<span t-esc="amount_by_group[1]"-->
-                                                      <!--t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.sale_idpricelist_id.currency_id}"/>-->
-                                            <!--</td>-->
-                                        <!--</t>-->
-                                    <!--</tr>-->
-                                <!--</t>-->
-                                <!--<tr class="border-black o_total">-->
-                                    <!--<td>-->
-                                        <!--<strong>-->
-                                            <!--<span>Total</span>-->
-                                            <!--<span>/</span>-->
-                                            <!--<span>‫ الاجمالي بعدالضر‬‫يبه‬</span>-->
-                                        <!--</strong>-->
-                                    <!--</td>-->
-                                    <!--<td class="text-right">-->
-                                        <!--<span t-field="o.sale_idamount_total"/>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                            <!--</table>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="mt32 ml16 mr16" name="signature">-->
-                    <!--<div class="offset-8">-->
-                        <!--<strong>Customer Sign</strong>-->
-                        <!--<br/>-->
-                        <!--<strong>‬‫توقيع ‫العميل‬‬</strong>-->
-                        <!--<span style="margin-left:30px;display: inline-block;-->
-                          <!--border-bottom: 1px solid #000;-->
-                          <!--width: 100px;  margin-left: 120px;margin-bottom:10px;-->
-                          <!--border-top: 1px solid #000;-->
-                          <!--width: 200px;-->
-                          <!--text-align: right;"></span>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</xpath>-->
-
-
         </template>
 
 
