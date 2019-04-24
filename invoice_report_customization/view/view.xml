@@ -4,7 +4,8 @@
         <template id="reportinvoice_customize" inherit_id="account.report_invoice_document">
             <xpath expr="//div[hasclass('page')]/div[1]" position="after">
                 <br/>
-                 <div style="overflow:hidden">
+                <div>
+                      <div style="overflow:hidden">
 
                             <div class="left" style="float: left;">
                                 <span style="font-weight:bold;">Customer Name:</span>
@@ -56,7 +57,7 @@
 
                             </div>
                         </div>
-
+                </div>
                 <br/>
                  <div>
                     <t>
@@ -212,8 +213,7 @@
 
             </xpath>
 
-
-               <xpath expr="//div[hasclass('page')]/div[3]" position="replace">
+               <xpath expr="//div[hasclass('page')]/div[4]" position="replace">
                    <div class="clearfix">
                         <div id="total" class="row">
                             <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
