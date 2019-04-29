@@ -139,7 +139,7 @@ class tasks(models.Model):
             invoice_obj = self.env['account.invoice'].create(
                 {'account_id': account_id_credit, 'sale_id': sale.id, 'user_id': 1, 'type': 'out_invoice',
                  'journal_id': sales_journal.id, 'partner_id': partner.id,
-                 'payment_term_id': payment_term, 'date_invoice': datetime.datetime.now().date()})
+                 'payment_term_id': payment_term, 'date_invoice': datetime.now().date()})
 
             if invoice_obj:
                 for all_line in self.sub_component_sale:
