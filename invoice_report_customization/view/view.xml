@@ -7,7 +7,7 @@
                   <div>
                       <div style="overflow:hidden">
 
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Customer Name:</span>
                                 <span t-esc="o.partner_id.name"/>
 
@@ -18,9 +18,37 @@
 
                             </div>
                         </div>
+                    <t t-if="o.partner_id.mobile">
+                   <div style="overflow:hidden">
+                      <div class="left" style="float: left;white-space: nowrap;">
+                                <span style="font-weight:bold;">Mobile:</span>
+                                <span t-esc="o.partner_id.mobile"/>
+
+                            </div>
+                            <div class="right" style="float: right;white-space: nowrap;">
+                                <span style="font-weight:bold;" t-esc="o.partner_id.mobile"></span>
+                                <span style="font-weight:bold;">التليفون المحمول: ‫‬</span>
+
+                            </div>
+                        </div>
+               </t>
+                 <t t-if="o.partner_id.email">
+                 <div style="overflow:hidden">
+                  <div class="left" style="float: left;">
+                   <span style="font-weight:bold;">Email:</span>
+                      <span t-esc="o.partner_id.email"/>
+
+                            </div>
+                            <div class="right" style="float: right;white-space: nowrap;">
+                                <span style="font-weight:bold;" t-esc="o.partner_id.email"></span>
+                                <span style="font-weight:bold;">البريد الإلكتروني ‬: ‫‬</span>
+                            </div>
+                        </div>
+                 </t>
+                 <t t-if="o.partner_id.vat">
                      <div style="overflow:hidden">
 
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Vat:</span>
                                 <span t-esc="o.partner_id.vat"/>
 
@@ -31,9 +59,11 @@
 
                             </div>
                         </div>
-                 <div style="overflow:hidden">
+                 </t>
+                 <t t-if="o.partner_id.street">
+                     <div style="overflow:hidden">
 
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Address :</span>
                                 <span t-esc="o.partner_id.street"/>
 
@@ -44,9 +74,11 @@
 
                             </div>
                         </div>
-                 <div style="overflow:hidden">
+                 </t>
+                 <t t-if="o.partner_id.street2">
+                      <div style="overflow:hidden">
 
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Address:</span>
                                 <span t-esc="o.partner_id.street2"/>
 
@@ -57,6 +89,9 @@
 
                             </div>
                         </div>
+                 </t>
+
+
                 </div>
             </xpath>
 
@@ -66,7 +101,7 @@
                     <t>
                         <div style="overflow:hidden">
 
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Agency Name:</span>
                                 <span t-esc="o.sale_id.agency_name.name"/>
 
@@ -80,7 +115,7 @@
                     </t>
                     <t>
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Claim# :</span>
 
                                 <span t-esc="o.sale_id.claim_no"/>
@@ -97,7 +132,7 @@
                     </t>
                     <t>
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Service Advisor :</span>
 
                                 <span t-esc="o.sale_id.service_advisor.name"/>
@@ -113,7 +148,7 @@
                     </t>
                     <t>
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
 
                                 <span style="font-weight:bold;">Job Card # :</span>
 
@@ -131,7 +166,7 @@
                     </t>
                     <t>
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Plate # :</span>
 
                                 <span t-esc="o.sale_id.vehicle.license_plate"/>
@@ -148,7 +183,7 @@
                     </t>
                     <t>
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Car Type:</span>
                                 <span t-esc="o.sale_id.vehicle.model_id.name"/>
                             </div>
@@ -161,7 +196,7 @@
                     </t>
                     <t>
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
+                            <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Chasis # :</span>
                                 <span t-esc="o.sale_id.vehicle.vin_sn"/>
 
@@ -197,21 +232,21 @@
                <th t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>VAT</span></th>
             </xpath>
 
-            <xpath expr="//div[hasclass('page')]/table[1]/thead[1]/tr[1]" position="before">
-                <tr>
-                    <t t-set="colspan" t-value="5"/>
-                    <th class="text-left">‫الوصف‬</th>
-                    <th class="text-right">ا‫لكمية‬</th>
-                    <th class="text-right">‫السعر‬</th>
-                    <th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
-                        <span>التخفيض .(%)</span>
-                        <t t-set="colspan" t-value="colspan+1"/>
-                    </th>
-                    <th class="text-right">‫الضريبة‬</th>
-                    <th class="text-right">
-                        <t groups="account.group_show_line_subtotals_tax_excluded">‫المجموع‬</t>
-                        <t groups="account.group_show_line_subtotals_tax_included">‫المجموع‬</t>
-                    </th>
+            <xpath expr="//div[hasclass('page')]/table[1]/thead[1]/tr[1]" position="replace">
+                  <tr>
+                   <t t-set="colspan" t-value="5"/>
+                        <th class="text-left">Description / ‫الوصف‬</th>
+                        <th class="text-right">Quantity / ‫الكمية‬</th>
+                        <th class="text-right">Unit Price / السعر‬</th>
+                        <th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
+                            <span>Disc / التخفيض (%)</span>
+                            <t t-set="colspan" t-value="colspan+1"/>
+                        </th>
+                        <th class="text-right">VAT / ‫الضريبة</th>
+                        <th class="text-right">
+                            <t groups="account.group_show_line_subtotals_tax_excluded">Amount / ‫المجموع</t>
+                            <t groups="account.group_show_line_subtotals_tax_included">Total Price / ‫المجموع</t>
+                        </th>
                 </tr>
 
             </xpath>

@@ -64,7 +64,7 @@ class tasks(models.Model):
                 task.kanban_state_label = task.legend_blocked
             else:
                 task.kanban_state_label = task.legend_done
-            if task.stage_id.name == 'Finished':
+            if task.stage_id.name == 'Delivery':
                 print ('..........its called')
                 task.is_task_finished = True
                 if not task.picking_ids:
@@ -170,7 +170,7 @@ class tasks(models.Model):
             }
 
     def close_task(self):
-        stage = self.env['project.task.type'].search([('name', '=', 'Finished')])
+        stage = self.env['project.task.type'].search([('name', '=', 'Delivery')])
         if stage:
             self.write({'stage_id': stage.id})
 
