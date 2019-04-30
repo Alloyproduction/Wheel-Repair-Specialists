@@ -19,6 +19,27 @@ class partnerinherit(models.Model):
     street1_arbi = fields.Char('street')
     street2_arbi = fields.Char('street')
 
+    @api.one
+    @api.constrains('mobile')
+    def unique_mobileidentity(self):
+        if self.mobile:
+            identities = self.env['res.partner'].search_count([('mobile', '=', self.mobile)])
+            if identities > 1:
+                raise ValueError(_('This Mobile No. is already exist'))
+
+    @api.multi
+    def name_get(self):
+        data = []
+        for rec in self:
+            display_value = ''
+            if rec.customer_code:
+                display_value += rec.customer_code
+            if rec.name:
+                display_value += '-'+rec.name
+            if rec.customer_arabic_name:
+                display_value += '-'+rec.customer_arabic_name
+            data.append((rec.id, display_value))
+        return data
 
 
 
