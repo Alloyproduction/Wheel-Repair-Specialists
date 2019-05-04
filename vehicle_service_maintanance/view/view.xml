@@ -10,7 +10,7 @@
              <field name="is_insured" invisible="True"/>
                             <field name="vehicle"  domain="[('owner_id','=', partner_id)]"/>
                             <field name="claim_no"  attrs="{'invisible': [('is_insured','=',False)],'required':[('is_insured','=',True)]}"/>
-                            <field name="service_advisor"/>
+                            <field name="service_advisor"  domain="[('is_service_provider','=', True)]"/>
             </xpath>
 
             </field>
