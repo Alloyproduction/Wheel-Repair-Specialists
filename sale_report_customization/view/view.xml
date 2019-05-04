@@ -97,7 +97,7 @@
             <xpath expr="//div[hasclass('page')]/div[2]" position="after">
                 <br/>
                 <div>
-                    <t>
+                     <t t-if="doc.agency_name">
                         <div style="overflow:hidden">
 
                             <div class="left" style="float: left;white-space: nowrap;">
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                     <t t-if="doc.claim_no">
                         <div style="overflow:hidden">
                              <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Claim# / </span>
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                      <t t-if="doc.service_advisor">
                         <div style="overflow:hidden">
                              <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Service Advisor /</span>
@@ -136,7 +136,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                 <t t-if="doc.partner_id.jobcard_no">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
 
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                     <t t-if="doc.vehicle.license_plate">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Plate # /</span>
@@ -164,7 +164,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                    <t t-if="doc.vehicle.model_id">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Car Type /</span>
@@ -175,7 +175,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                      <t t-if="doc.vehicle.vin_sn">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Chasis # /</span>
@@ -186,7 +186,7 @@
                             </div>
                         </div>
                     </t>
-                    <t>
+                    <t t-if="doc.vehicle.odometer">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Odoo Meter /</span>
