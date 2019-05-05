@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </t>
-                     <t t-if="oo.sale_id.vehicle.license_plate">
+                     <t t-if="o.sale_id.vehicle.license_plate">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Plate # /</span>
