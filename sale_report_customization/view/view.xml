@@ -179,7 +179,7 @@
                         <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Car Type /</span>
                                    <span style="font-weight:bold;"> اسم الوكالة</span>
-                                   
+
                             </div>
                       </td>
                       <td  style="border: none;padding:5px 5px" width="800px">
@@ -217,7 +217,7 @@
                     </tr>
                   </t>
 
-
+                     </table>
                     <br/>
                 </div>
             </xpath>
