@@ -20,23 +20,11 @@
                 <field name="customer_arabic_name" placeholder="Arabic Name"/>
                 <field name="customer_code" placeholder="Customer Code"/>
             </xpath>
-            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
-                <page name="arbiinfo" string="معلومات عربية">
-                    <group name="studio_N4yL">
-                        <group name="studiL_left">
-                            <field name="agency_name_arbi" string="اسم الوكالة"/>
-                            <field name="claim_no_arbi" string="رقم ة المطالب"/>
-                            <field name="service_advisor_arbi" string="اسم المشر ف "/>
-                            <field name="jobcard_no_arbi" string="رقم ت كر ل عم ة الوكال"/>
-                            <field name="plate_no_arbi" string="رقم ة اللوح "/>
-                            <field name="car_type_arbi" string="نوع ة السيار "/>
-                            <field name="chasis_no_arbi" string="رقم ة الشاصي "/>
-                            <field name="odoo_meter_arbi" string="قراءة د العدا"/>
-                        </group>
-                    </group>
-                </page>
+            <xpath expr="//notebook/page[@name='sales_purchases']/group[1]/group[1]/field[@name='customer']" position="after">
+                  <field name="is_agency"/>
+                   <field name="is_service_provider"/>
             </xpath>
-
         </field>
     </record>
+
 </odoo>

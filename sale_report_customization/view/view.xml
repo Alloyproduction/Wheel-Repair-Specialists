@@ -97,129 +97,103 @@
             <xpath expr="//div[hasclass('page')]/div[2]" position="after">
                 <br/>
                 <div>
-                    <t>
+                     <t t-if="doc.agency_name">
                         <div style="overflow:hidden">
 
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Agency Name:</span>
-                                <span t-esc="doc.agency_name.name"/>
+                            <div class="left" style="float: left;white-space: nowrap;">
+                                <span style="font-weight:bold;">Agency Name /</span>
+                                <span style="font-weight:bold;">اسم الوكالة </span>
+
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.partner_id.agency_name_arbi"></span>
-                                <span style="font-weight:bold;">:اسم الوكالة</span>
-
+                              <span style="font-weight:bold;" t-esc="doc.agency_name.name"/>
                             </div>
                         </div>
                     </t>
-                    <t>
+                     <t t-if="doc.claim_no">
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Claim# :</span>
+                             <div class="left" style="float: left;white-space: nowrap;">
+                                <span style="font-weight:bold;">Claim# / </span>
+                                 <span style="font-weight:bold;"> رقم‬ ‫المطالبة </span>
 
-                                <span t-esc="doc.claim_no"/>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.partner_id.claim_no_arbi"></span>
-                                <span style="font-weight:bold;">: رقم‬ ‫المطالبة
-                                </span>
-
-
+                                <span style="font-weight:bold;" t-esc="doc.claim_no"/>
                             </div>
                         </div>
                     </t>
-                    <t>
+                      <t t-if="doc.service_advisor">
                         <div style="overflow:hidden">
-                            <div class="left" style="float: left;">
-                                <span style="font-weight:bold;">Service Advisor :</span>
+                             <div class="left" style="float: left;white-space: nowrap;">
+                                <span style="font-weight:bold;">Service Advisor /</span>
+                                <span style="font-weight:bold;"> اسم المشر ف </span>
 
-                                <span t-esc="doc.service_advisor.name"/>
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="float:left;font-weight:bold;"
-                                      t-esc="doc.partner_id.service_advisor_arbi"></span>
-                                <span style="font-weight:bold;">: اسم المشر ف</span>
-
-
+                                  <span style="font-weight:bold;" t-esc="doc.service_advisor.name"/>
                             </div>
                         </div>
                     </t>
-                    <t>
+                 <t t-if="doc.partner_id.jobcard_no">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
 
-                                <span style="font-weight:bold;">Job Card # :</span>
+                                <span style="font-weight:bold;">Job Card # /</span>
+                                <span style="font-weight:bold;"> رقم ‫كرت‬ ‫عمل ‫الوكالة </span>
 
-                                <span t-esc="doc.partner_id.jobcard_no"/>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="float:left;font-weight:bold;"
-                                      t-esc="doc.partner_id.jobcard_no_arbi"></span>
-                                <span style="font-weight:bold;">: رقم ‫كرت‬ ‫عمل ‫الوكالة
-                                </span>
+                                 <span style="font-weight:bold;" t-esc="doc.partner_id.jobcard_no"/>
 
                             </div>
                         </div>
                     </t>
-                    <t>
+                     <t t-if="doc.vehicle.license_plate">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
-                                <span style="font-weight:bold;">Plate # :</span>
-
-                                <span t-esc="doc.vehicle.license_plate"/>
+                                <span style="font-weight:bold;">Plate # /</span>
+                                <span style="font-weight:bold;"> رقم ة اللوح </span>
 
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="float:left;font-weight:bold;" t-esc="doc.partner_id.plate_no_arbi"></span>
-                                <span style="font-weight:bold;">: رقم ة اللوح
-                                </span>
-
+                                <span style="font-weight:bold;" t-esc="doc.vehicle.license_plate"/>
 
                             </div>
                         </div>
                     </t>
-                    <t>
+                    <t t-if="doc.vehicle.model_id">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
-                                <span style="font-weight:bold;">Car Type:</span>
-                                <span t-esc="doc.vehicle.model_id.name"/>
+                                <span style="font-weight:bold;">Car Type /</span>
+                                   <span style="font-weight:bold;"> اسم الوكالة</span>
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="float:left;font-weight:bold;" t-esc="doc.partner_id.car_type_arbi"></span>
-                                <span style="font-weight:bold;">: اسم الوكالة</span>
-
+                                <span style="font-weight:bold;" t-esc="doc.vehicle.model_id.name"/>
                             </div>
                         </div>
                     </t>
-                    <t>
+                      <t t-if="doc.vehicle.vin_sn">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
-                                <span style="font-weight:bold;">Chasis # :</span>
-                                <span t-esc="doc.vehicle.vin_sn"/>
-
+                                <span style="font-weight:bold;">Chasis # /</span>
+                                 <span style="font-weight:bold;"> ‫‫رقم الشاصية </span>
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="float:left;font-weight:bold;" t-esc="doc.partner_id.chasis_no_arbi"></span>
-                                <span style="font-weight:bold;">: ‫‫رقم الشاصية
-                                </span>
-
+                                <span style="font-weight:bold;" t-esc="doc.vehicle.vin_sn"/>
                             </div>
                         </div>
                     </t>
-                    <t>
+                    <t t-if="doc.vehicle.odometer">
                         <div style="overflow:hidden">
                             <div class="left" style="float: left;white-space: nowrap;">
-                                <span style="font-weight:bold;">Odoo Meter :</span>
-
-                                <span t-esc="doc.vehicle.odometer"/>
+                                <span style="font-weight:bold;">Odoo Meter /</span>
+                                 <span style="font-weight:bold;">قراءة د العدا </span>
                             </div>
                             <div class="right" style="float: right;white-space: nowrap;">
-                                <span style="float:left;font-weight:bold;"
-                                      t-esc="doc.partner_id.odoo_meter_arbi"></span>
-                                <span style="font-weight:bold;">: قراءة د العدا</span>
-
+                                 <span style="font-weight:bold;" t-esc="doc.vehicle.odometer"/>
                             </div>
                         </div>
                     </t>
@@ -284,7 +258,10 @@
                                         </t>
                                         <t t-else="">
                                             <td>
-                                                <span t-esc="amount_by_group[0]"/>
+                                                <t t-if="amount_by_group[0]=='Taxes'">
+                                                    <span style="font-weight:bold;">VAT/</span>
+                                                    <span style="font-weight:bold;">‫ الضر‬‫‫يبة‬ القيمة‬ ‫المضافة‬</span>
+                                                </t>
                                             </td>
                                             <td class="text-right o_price_total">
                                                 <span t-esc="amount_by_group[1]"

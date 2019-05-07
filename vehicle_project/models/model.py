@@ -425,6 +425,11 @@ class InheritSale(models.Model):
                     tax_list.append(tax.id)
                 for analytic_accounttag in line.analytic_tag_ids:
                     analytic_account_tag.append(analytic_accounttag.id)
+
+                self.env['project.task'].create(
+                    {'name': line.product_id.name + '-' + self.vehicle.model_id.name,'parent_id':task.id, 'sale': self.id, 'stage_id': stage_id,
+                     'project_id': self.project.id})
+
                 self.env['subtask.component'].create(
                     {'task': task.id, 'product_id': line.product_id.id, 'price_subtotal': line.price_subtotal,
                      'product_uom': line.product_uom.id, 'product_uom_qty': line.product_uom_qty,

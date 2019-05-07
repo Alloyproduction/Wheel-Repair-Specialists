@@ -18,6 +18,8 @@ class partnerinherit(models.Model):
     jobcard_no_arbi = fields.Char('‫رقم ‫كرت‬ ‫عمل ‫الوكالة')
     street1_arbi = fields.Char('street')
     street2_arbi = fields.Char('street')
+    is_agency = fields.Boolean('Agency')
+    is_service_provider = fields.Boolean('Service Provider')
 
     @api.one
     @api.constrains('mobile')
@@ -63,5 +65,7 @@ class InheritSale(models.Model):
             identities = self.env['sale.order'].search_count([('claim_no', '=', self.claim_no)])
             if identities > 1:
                 raise ValueError(_('This claim_no is already exist'))
+
+
 
 
