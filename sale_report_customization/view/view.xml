@@ -103,12 +103,9 @@
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Agency Name /</span>
                                 <span style="font-weight:bold;">اسم الوكالة </span>
-
-
+                               <span style="padding-left:60px;font-weight:bold;" t-esc="doc.agency_name.name"/>
                             </div>
-                            <div style="margin-left:50px;white-space: nowrap;">
-                              <span style="font-weight:bold;" t-esc="doc.agency_name.name"/>
-                            </div>
+
                         </div>
                     </t>
                      <t t-if="doc.claim_no">
@@ -116,12 +113,10 @@
                              <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Claim# / </span>
                                  <span style="font-weight:bold;"> رقم‬ ‫المطالبة </span>
-
+                                 <span style="padding-left:50px;font-weight:bold;" t-esc="doc.claim_no"/>
 
                             </div>
-                           <div style="margin-left:50px;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.claim_no"/>
-                            </div>
+
                         </div>
                     </t>
                       <t t-if="doc.service_advisor">
@@ -129,11 +124,10 @@
                              <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Service Advisor /</span>
                                 <span style="font-weight:bold;"> اسم المشر ف </span>
+                                 <span style="padding-left:50px;font-weight:bold;" t-esc="doc.service_advisor.name"/>
 
                             </div>
-                             <div style="margin-left:50px;white-space: nowrap;">
-                                  <span style="font-weight:bold;" t-esc="doc.service_advisor.name"/>
-                            </div>
+
                         </div>
                     </t>
                  <t t-if="doc.partner_id.jobcard_no">
@@ -142,13 +136,10 @@
 
                                 <span style="font-weight:bold;">Job Card # /</span>
                                 <span style="font-weight:bold;"> رقم ‫كرت‬ ‫عمل ‫الوكالة </span>
-
-
-                            </div>
-                            <div style="margin-left:50px;white-space: nowrap;">
-                                 <span style="font-weight:bold;" t-esc="doc.partner_id.jobcard_no"/>
+                               <span style="padding-left:50px;font-weight:bold;" t-esc="doc.partner_id.jobcard_no"/>
 
                             </div>
+
                         </div>
                     </t>
                      <t t-if="doc.vehicle.license_plate">
@@ -156,12 +147,9 @@
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Plate # /</span>
                                 <span style="font-weight:bold;"> رقم ة اللوح </span>
-
+                          <span style="padding-left:50px;font-weight:bold;" t-esc="doc.vehicle.license_plate"/>
                             </div>
-                             <div style="margin-left:50px;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.vehicle.license_plate"/>
 
-                            </div>
                         </div>
                     </t>
                     <t t-if="doc.vehicle.model_id">
@@ -169,10 +157,9 @@
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Car Type /</span>
                                    <span style="font-weight:bold;"> اسم الوكالة</span>
+                                   <span style="padding-left:50px;font-weight:bold;" t-esc="doc.vehicle.model_id.name"/>
                             </div>
-                             <div style="margin-left:50px;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.vehicle.model_id.name"/>
-                            </div>
+
                         </div>
                     </t>
                       <t t-if="doc.vehicle.vin_sn">
@@ -180,10 +167,9 @@
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Chasis # /</span>
                                  <span style="font-weight:bold;"> ‫‫رقم الشاصية </span>
+                                <span style="padding-left:50px;font-weight:bold;" t-esc="doc.vehicle.vin_sn"/>
                             </div>
-                            <div style="margin-left:50px;white-space: nowrap;">
-                                <span style="font-weight:bold;" t-esc="doc.vehicle.vin_sn"/>
-                            </div>
+
                         </div>
                     </t>
                     <t t-if="doc.vehicle.odometer">
@@ -191,10 +177,9 @@
                             <div class="left" style="float: left;white-space: nowrap;">
                                 <span style="font-weight:bold;">Odoo Meter /</span>
                                  <span style="font-weight:bold;">قراءة د العدا </span>
+                                <span style="padding-left:50px;font-weight:bold;" t-esc="doc.vehicle.odometer"/>
                             </div>
-                             <div style="margin-left:50px;white-space: nowrap;">
-                                 <span style="font-weight:bold;" t-esc="doc.vehicle.odometer"/>
-                            </div>
+
                         </div>
                     </t>
                     <br/>
