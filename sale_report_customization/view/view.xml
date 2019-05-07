@@ -106,7 +106,7 @@
 
 
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                            <div style="margin-left:50px;white-space: nowrap;">
                               <span style="font-weight:bold;" t-esc="doc.agency_name.name"/>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
 
 
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                           <div style="margin-left:50px;white-space: nowrap;">
                                 <span style="font-weight:bold;" t-esc="doc.claim_no"/>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                                 <span style="font-weight:bold;"> اسم المشر ف </span>
 
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                             <div style="margin-left:50px;white-space: nowrap;">
                                   <span style="font-weight:bold;" t-esc="doc.service_advisor.name"/>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
 
 
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                            <div style="margin-left:50px;white-space: nowrap;">
                                  <span style="font-weight:bold;" t-esc="doc.partner_id.jobcard_no"/>
 
                             </div>
@@ -158,7 +158,7 @@
                                 <span style="font-weight:bold;"> رقم ة اللوح </span>
 
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                             <div style="margin-left:50px;white-space: nowrap;">
                                 <span style="font-weight:bold;" t-esc="doc.vehicle.license_plate"/>
 
                             </div>
@@ -170,7 +170,7 @@
                                 <span style="font-weight:bold;">Car Type /</span>
                                    <span style="font-weight:bold;"> اسم الوكالة</span>
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                             <div style="margin-left:50px;white-space: nowrap;">
                                 <span style="font-weight:bold;" t-esc="doc.vehicle.model_id.name"/>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                                 <span style="font-weight:bold;">Chasis # /</span>
                                  <span style="font-weight:bold;"> ‫‫رقم الشاصية </span>
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                            <div style="margin-left:50px;white-space: nowrap;">
                                 <span style="font-weight:bold;" t-esc="doc.vehicle.vin_sn"/>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                                 <span style="font-weight:bold;">Odoo Meter /</span>
                                  <span style="font-weight:bold;">قراءة د العدا </span>
                             </div>
-                            <div class="right" style="float: right;white-space: nowrap;">
+                             <div style="margin-left:50px;white-space: nowrap;">
                                  <span style="font-weight:bold;" t-esc="doc.vehicle.odometer"/>
                             </div>
                         </div>
