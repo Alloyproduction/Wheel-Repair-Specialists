@@ -38,7 +38,7 @@ class invoicetelenoc(models.Model):
             'x_studio_field_rgEdd': self.x_studio_field_icWOZ.id,
             'x_studio_car_type': self.vehicle.id,
             'x_studio_job_card_1': self.x_studio_agency_job_card,
-            'x_studio_service_advisor': self.service_advisor.id,
+            'x_studio_service_provider': self.service_advisor.id,
             'date_invoice': fields.Date.today(),
             'transaction_ids': [(6, 0, self.transaction_ids.ids)],
         }
