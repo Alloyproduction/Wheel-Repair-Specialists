@@ -41,6 +41,42 @@ class tasks(models.Model):
     is_task_finished = fields.Boolean('is_task_finish', compute='_compute_kanban_state_label')
     delivery_count = fields.Integer(string='Delivery Orders', compute='_compute_picking_ids')
     picking_ids = fields.One2many('stock.picking', 'task_id', string='Pickings')
+    # code for hours minutes
+    hourminutes = fields.Char(string='hours minutes', compute='_compute_hours_minutes')
+    hours_minutes = fields.Char(string='hours: minutes')
+
+    # total_cost = fields.Float('Total Labor Cost', compute='_compute_total_cost')
+    #
+    #
+    #
+    # def get_total_labor_cost(self):
+    #     if self.timesheet_ids:
+    #         pass
+
+    @api.depends('date_assign')
+    def _compute_hours_minutes(self):
+
+        for task in self:
+
+            if task.date_assign:
+                date1 = task.date_assign
+                date2 = fields.Datetime.now()
+
+                # code to get hours and minutes
+                datetimeFormat = '%Y-%m-%d %H:%M:%S'
+                date11 = datetime.strptime(str(date1), datetimeFormat)
+
+                date12 = datetime.strptime(str(date2), datetimeFormat)
+
+                diff = date12 - date11
+                hour1 = diff.days * 24
+
+                hours = (diff.seconds) // 3600
+                minutes = ((diff.seconds) % 3600) // 60
+                totalhours = hour1 + hours
+
+                task.hourminutes = str(totalhours) + ":" + str(minutes)
+                task.hours_minutes = task.hourminutes
 
     # total_cost = fields.Float('Total Labor Cost', compute='_compute_total_cost')
     #
@@ -65,7 +101,7 @@ class tasks(models.Model):
             else:
                 task.kanban_state_label = task.legend_done
             if task.stage_id.name == 'Delivery':
-                print ('..........its called')
+                print('..........its called')
                 task.is_task_finished = True
                 if not task.picking_ids:
                     for tasksub in task.sub_component_sale:
@@ -90,7 +126,6 @@ class tasks(models.Model):
             action['views'] = [(self.env.ref('stock.view_picking_form').id, 'form')]
             action['res_id'] = pickings.id
         return action
-
 
     @api.one
     def get_payment_term(self, terms):
@@ -262,7 +297,8 @@ class subtaskcomponent(models.Model):
 
                 try:
                     self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
-                                                      sale.partner_shipping_id.property_stock_customer, line.product_id.name,
+                                                      sale.partner_shipping_id.property_stock_customer,
+                                                      line.product_id.name,
                                                       sale.name, values)
                 except UserError as error:
                     errors.append(error.name)
@@ -342,7 +378,7 @@ class subtaskcomponent(models.Model):
             if sale.pricelist_id and sale.partner_id:
                 vals['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
                     self._get_display_price(product, sale), product.taxes_id, self.tax_id, sale.company_id)
-                print (self.env['account.tax']._fix_tax_included_price_company(
+                print(self.env['account.tax']._fix_tax_included_price_company(
                     self._get_display_price(product, sale), product.taxes_id, self.tax_id, sale.company_id))
             self.update(vals)
 
@@ -403,6 +439,20 @@ class InheritSale(models.Model):
     project = fields.Many2one('project.project', string='Project')
     agency_name = fields.Many2one('res.partner', string='Agency Name')
 
+    def action_task(self):
+        action = self.env.ref('project.project_task_action_sub_task').read()[0]
+        ctx = self.env.context.copy()
+        ctx.update({
+            #             'default_parent_id': self.id,
+            'default_project_id': self.env.context.get('project_id', self.project.id),
+            'default_name': self.env.context.get('name', self.name) + ':',
+            'default_partner_id': self.env.context.get('partner_id', self.partner_id.id),
+            'search_default_project_id': self.env.context.get('project_id', self.project.id),
+        })
+        action['context'] = ctx
+        action['domain'] = [('name', 'ilike', self.name)]
+        return action
+
     @api.multi
     def action_confirm_replica(self):
         self.write({
@@ -414,9 +464,9 @@ class InheritSale(models.Model):
             stage = self.env['project.task.type'].search([('name', '=', 'New')], limit=1)
             if stage:
                 stage_id = stage.id
-            task = self.env['project.task'].create(
-                {'name': self.partner_id.name + '-' + self.name, 'sale': self.id, 'stage_id': stage_id,
-                 'project_id': self.project.id})
+            #             task = self.env['project.task'].create(
+            #                 {'name': self.partner_id.name + '-' + self.name, 'sale': self.id, 'stage_id': stage_id,
+            #                  'project_id': self.project.id})
 
             for line in self.order_line:
                 tax_list = []
@@ -426,28 +476,32 @@ class InheritSale(models.Model):
                 for analytic_accounttag in line.analytic_tag_ids:
                     analytic_account_tag.append(analytic_accounttag.id)
 
-                self.env['project.task'].create(
-                    {'name': line.product_id.name + '-' + self.vehicle.model_id.name,'parent_id':task.id, 'sale': self.id, 'stage_id': stage_id,
-                     'project_id': self.project.id})
+                task = self.env['project.task'].create(
+                    {'name': line.product_id.name + '-' + str(self.x_studio_field_DuczH.brand_id.name) + '-' + str(
+                        self.x_studio_field_DuczH.name) + '-' + self.name, 'sale': self.id, 'stage_id': stage_id,
+                     'project_id': self.project.id, 'date_assign': fields.Datetime.now(),
+                     'date_deadline': fields.Date.today() + timedelta(hours=90)})
 
-                self.env['subtask.component'].create(
-                    {'task': task.id, 'product_id': line.product_id.id, 'price_subtotal': line.price_subtotal,
-                     'product_uom': line.product_uom.id, 'product_uom_qty': line.product_uom_qty,
-                     'price_unit': line.price_unit, 'tax_id': [(6, 0, tax_list)], 'discount': line.discount,
-                     'analytic_tag_ids': [(6, 0, analytic_account_tag)]})
+                #                 self.env['subtask.component'].create(
+                #                     {'task': task.id, 'product_id': line.product_id.id, 'price_subtotal': line.price_subtotal,
+                #                      'product_uom': line.product_uom.id, 'product_uom_qty': line.product_uom_qty,
+                #                      'price_unit': line.price_unit, 'tax_id': [(6, 0, tax_list)], 'discount': line.discount,
+                #                      'analytic_tag_ids': [(6, 0, analytic_account_tag)]})
 
-            task.toggle_start()
-            view = self.env.ref('project.view_task_form2')
-            return {
-                'name': 'Task created',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'view_id': view.id,
-                'res_model': 'project.task',
-                'type': 'ir.actions.act_window',
-                'res_id': task.id,
-                'context': self.env.context
-            }
+                task.toggle_start()
+
+
+#             view = self.env.ref('project.view_task_form2')
+#             return {
+#                 'name': 'Task created',
+#                 'view_type': 'form',
+#                 'view_mode': 'form',
+#                 'view_id': view.id,
+#                 'res_model': 'project.task',
+#                 'type': 'ir.actions.act_window',
+#                 'res_id': task.id,
+#                 'context': self.env.context
+#             }
 
 
 class StockPicking(models.Model):
